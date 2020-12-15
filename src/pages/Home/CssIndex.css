@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Grandstander:wght@200&display=swap");
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+body,
+HTML {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: "Grandstander";
+  scroll-behavior: smooth !important;
+  background-image: url(../../image/3.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center center;
+}
