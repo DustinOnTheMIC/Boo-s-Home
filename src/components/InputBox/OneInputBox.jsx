@@ -17,7 +17,7 @@ class OneInputBox extends Component {
       return (
           <div className='col-12 justify-content-center'>
               <form className={useStyles.root} noValidate autoComplete="off" >
-                  <TextField id="outlined-basic" onChange={(e) => this.props.onchange(e.target.value)} className="bg-light rounded mt-5 col-12" label={label} variant="outlined" />
+                  <TextField  onChange={(e) => this.props.onchange(e.target.value)} className="bg-light rounded mt-5 col-12" label={label} variant="outlined" />
               </form>
           </div>
       );

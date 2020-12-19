@@ -1,0 +1,26 @@
+.div-left{
+    height: 1000px;
+    position: relative;
+}
+
+.content-div-left{
+    height: 100%;
+    position: fixed;
+    margin-top: 0%;
+}
+
+.div-right{
+    right: 0;
+    margin-top: 10%;
+    height: 800px;
+}
+
+.content-div-right{
+
+}
+
+@media (max-width:768px){
+    .div-left{
+        height: 500px;
+    }
+}

@@ -11,7 +11,6 @@ function DatePicker(props) {
         <div className="col-12 d-flex">
             <h5 className="col-6">Thời gian bạn muốn {come}: </h5>
             <ReactDatePicker
-                id = {props.id}
                 control = {['time']}
                 touchUi={true}
                 className="form-text bg-light rounded col-12"

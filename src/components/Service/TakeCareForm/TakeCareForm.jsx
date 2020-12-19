@@ -11,7 +11,6 @@ class TakeCareForm extends Component {
         this.state = {
         }
     }
-
     componentDidMount = () =>{
       this.setState(
         {id: 'id account'}
@@ -19,9 +18,14 @@ class TakeCareForm extends Component {
     }
 
     handleChangeTimeCome = (time) => {
+      let newTime = time.split(' ')
+      if(newTime[2] === 'pm')
+        newTime[0] = (parseInt(newTime[0])+12).toString()
+      newTime.pop()
       this.setState(
-        {timeCome: time}
+        {timeCome: `${newTime[0]} ${newTime[1]}`}
       )
+      console.log(this.state);
     }
 
     onChangeDateCome = (date) => {
@@ -31,10 +35,15 @@ class TakeCareForm extends Component {
     }
 
     handleChangeTimeGo = (time) => {
-        this.setState(
-          {timeGo: time}
-        )
-      }
+      let newTime = time.split(' ')
+      if(newTime[2] === 'pm')
+        newTime[0] = (parseInt(newTime[0])+12).toString()
+      newTime.pop()
+      this.setState(
+        {timeGo: `${newTime[0]} ${newTime[1]}`}
+      )
+      console.log(this.state);
+    }
   
       onChangeDateGo = (date) => {
         this.setState(
@@ -48,20 +57,10 @@ class TakeCareForm extends Component {
       )
     }
 
-    formatTime = (timeCome, timeGo) => { //format time to 24 hours
-      if(timeCome[2] === 'pm'){
-        timeCome[0] = (parseFloat(timeCome[0]) + 12).toString()
-      }
-      if(timeGo[2] === 'pm'){
-        timeGo[0] = (parseFloat(timeGo[0])+12).toString();
-      }
-    }
-
     isValidDateTime = (dateCome, dateGo, timeCome, timeGo) => {
       if(dateCome === '' || dateGo === '' || timeCome === '' || timeGo === '') {
         return false
       }
-      this.formatTime(timeCome, timeGo)//format time to 24 hours
       if(dateCome[2] === dateGo[2]){//year
         if(dateCome[1] === dateGo[1]){//month
           if(dateCome[0] === dateGo[0]){//day
@@ -92,18 +91,26 @@ class TakeCareForm extends Component {
 
     onSubmitForm = () => {
       const {dateCome, dateGo, timeCome, timeGo} = this.state
-      let arrDateCome = dateCome.split(' ');
-      let arrDateGo = dateGo.split(' ');
-      let arrTimeCome = timeCome.split(' ');
-      let arrTimeGo = timeGo.split(' ');
-      setTimeout(() => {
-        if(this.isValidDateTime(arrDateCome, arrDateGo, arrTimeCome, arrTimeGo)){
-          //call api here
-        }else{
-          console.log('false');
+
+      if(!dateCome || !dateGo || !timeCome || !timeGo){
+        alert('Please enter all info')
+      }
+      else{
+        if(window.confirm('Hãy chắc chắn các thông tin là chính xác')){
+          let arrDateCome = dateCome.split(' ');
+          let arrDateGo = dateGo.split(' ');
+          let arrTimeCome = timeCome.split(' ');
+          let arrTimeGo = timeGo.split(' ');
+          setTimeout(() => {
+            if(this.isValidDateTime(arrDateCome, arrDateGo, arrTimeCome, arrTimeGo)){
+              //call api here
+              this.props.onSubmit(this.state)
+            }else{
+              console.log('false');
+            }
+          }, 10);
         }
-        
-      }, 10);
+      }
     }
 
     onCloseForm = () => {
@@ -112,7 +119,7 @@ class TakeCareForm extends Component {
   render() {
     const {title, id} = this.props;
     return (
-      <div id={id} className="container-fluid mt-5 form-shower d-none">
+      <div id={id} className="container-fluid mt-5 form-shower d-none scroll">
         <div className="row justify-content-center">
           <div id='scrollDiv' className="col-12 col-lg-6 bg-light rounded mt-5 pb-5 ">
             <h1 className="text-center">{title}</h1>

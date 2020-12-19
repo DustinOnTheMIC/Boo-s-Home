@@ -8,7 +8,7 @@ class Navbar extends Component {
         super(props);
         this.state = {
             product: [{id: 1, name: 'asd'}],
-            login: false //status user
+            login: localStorage.getItem('idAccount') == null ? false : true //status user
         }
     }
 
@@ -40,6 +40,10 @@ class Navbar extends Component {
         }
     }
 
+    handleLogout = () => {
+        localStorage.clear()
+    }
+
     render() {
         return (
             <nav id="navbar" className="navbar navbar-expand-md navbar-light bg-secondary sticky-top nav-size bg-transparent">
@@ -64,10 +68,10 @@ class Navbar extends Component {
                                 <a href="#footer" className="nav-link text-light text-title">Contact</a>
                             </li>
                             <li id="login" className="nav-item">
-                                <a href="#a" className="nav-link text-light text-title">Login</a>
+                                <a href="/login" className="nav-link text-light text-title">Login</a>
                             </li>
                             <li id="logout" className="nav-item">
-                                <a href="#a" className="nav-link text-light text-title">Logout</a>
+                                <a href="/" onClick={this.handleLogout} className="nav-link text-light text-title">Logout</a>
                             </li>
                         </ul>
                     </div>

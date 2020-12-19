@@ -3,49 +3,94 @@ import OneInputBox from "./../../../components/InputBox/OneInputBox";
 import DatePicker from "./../../../components/DateTimePicker/DatePicker";
 import TimePicker from "./../../../components/DateTimePicker/TimePicker";
 
+
+var serviceName = ""
+var id = ''
+var date = ''
+var time = ''
+var note = ''
+
 class NormalForm extends Component {
 
+    // constructor(props) {
+    //     super(props)
+    //     this.state = {
+    //       serviceName: '',
+    //       id: '',
+    //       date: '',
+    //       time : '',
+    //       note:''
+    //     }
+    // }
     constructor(props) {
-        super(props)
-        this.state = {
-          serviceName: '',
-          id: 'id account',
-          date: '',
-          time : '',
-          note:''
-        }
+      super(props)
+      this.state = {
+        services: ''
+      }
     }
 
-    handleChangeTime = (time) => {
-      this.setState(
-        {time: time}
-      )
-      console.log(this.state);
+    componentDidMount = () =>{
+      // this.setState(
+      //   {id: localStorage.getItem('idAccount')}
+      // )
+      id = localStorage.getItem('idAccount')
+      serviceName = this.props.id
     }
 
-    onChangeDate = (date) => {
-      this.setState({date: date})
+    handleChangeTime = (timeIn) => {
+      let newTime = timeIn.split(' ')
+      if(newTime[2] === 'pm')
+        newTime[0] = (parseInt(newTime[0])+12).toString()
+      newTime.pop()
+      // this.setState(
+      //   {time: `${newTime[0]} ${newTime[1]}`,}
+      // )
+      // console.log(this.state);
+      time = `${newTime[0]} ${newTime[1]}`
     }
 
-    onChangeNote = (note) => {
-      this.setState({note: note})
-      setTimeout(() => {
-        console.log(this.state);
-      }, 100);
+    onChangeDate = (dateIn) => {
+      // this.setState({date: date})
+      date = dateIn
+    }
+
+    onChangeNote = (noteIn) => {
+      // this.setState({note: note})
+      // setTimeout(() => {
+      //   console.log(this.state);
+      // }, 100);
+      note = noteIn
     }
 
     onSubmitForm = () => {
+      // this.setState(
+      //   {serviceName: this.props.id}
+      // )
+      // setTimeout(() => {
+      //   console.log(this.state);
+      // },100)
+      // this.props.onSubmit(this.state)
+      let oneService = {
+        serviceName: serviceName,
+          id: id,
+          date: date,
+          time : time,
+          note: note
+      }
+      let services = []
+      services.push(oneService)
       this.setState(
-        {serviceName: this.props.id}
+        {services}
       )
       setTimeout(() => {
-        console.log(this.state);
-      },100)
+        console.log('state: ',this.state, 'services: ', this.state.services);
+      }, 10);
     }
 
     onCloseForm = () => {
         this.props.onCloseForm(this.props.id)
     }
+
   render() {
       const {title, id} = this.props;
     return (
@@ -53,7 +98,7 @@ class NormalForm extends Component {
         <div className="row justify-content-center">
           <div className="col-12 col-lg-6 bg-light rounded mt-5 pb-5 ">
             <h1 className="text-center">{title}</h1>
-            <DatePicker id={`DatePicker${id}`} onChangeDate={this.onChangeDate} id='datePicker'/>
+            <DatePicker id={`DatePicker${id}`} onChangeDate={this.onChangeDate} />
             <TimePicker id={`TimePicker${id}`} handleChange={this.handleChangeTime} />
             <OneInputBox onchange={this.onChangeNote} label="Ghi chú" />
             <button 
