@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom'
 
 class Register extends Component {
 
@@ -22,10 +23,18 @@ class Register extends Component {
 
     handleSubmit = () => {
         const { userName, password, rePassword } = this.state;
+        const {history, location} = this.props;
+        var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        if(!password || !userName || !rePassword)
+            alert('require all value')
         if(password !== rePassword){
             alert('Password and rePassword must be the same')
         }
-        console.log(this.state);
+        if(!pattern.test(userName)){
+            alert('user name must be a valid pattern for email')
+        }
+        history.goBack()
+        console.log('submited');
     }
 
     render() {
@@ -55,10 +64,10 @@ class Register extends Component {
                                     <input className='mt-3' type="password" name='rePassword' onChange={this.handleChange} placeholder="Xác Nhận Mật Khẩu"></input>
                                     <div className="mt-5 col-12">
                                         <div className="col-12 row justify-content-center">
-                                            <a className="btn btn-primary" href='#asd' onClick={this.handleSubmit}>Đăng Kí</a>
+                                            <Link className="btn btn-primary" to='#asd' onClick={this.handleSubmit}>Đăng Kí</Link>
                                         </div>
                                         <div className='col-12 row justify-content-center'>
-                                        <a href='/Login' onClick={this.handleLogin}>Bạn đã có tài khoản?</a>
+                                            <Link to='/Login' onClick={this.handleLogin}>Bạn đã có tài khoản?</Link>
                                         </div>
                                     </div>
                                 </div>

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import OneInputBox from "./../../../components/InputBox/OneInputBox";
 import DatePicker from "./../../../components/DateTimePicker/DatePicker";
 import TimePicker from "./../../../components/DateTimePicker/TimePicker";
-
+import { Redirect } from "react-router-dom";
 
 var serviceName = ""
 var id = ''
@@ -83,7 +83,10 @@ class NormalForm extends Component {
         {services}
       )
       setTimeout(() => {
-        console.log('state: ',this.state, 'services: ', this.state.services);
+        if(!this.state.services.id){
+          // <Redirect push  to='/Login' />
+          // console.log('redirect called');
+        }
       }, 10);
     }
 
@@ -103,14 +106,12 @@ class NormalForm extends Component {
             <OneInputBox onchange={this.onChangeNote} label="Ghi chú" />
             <button 
                 className="btn btn-primary mt-5 mx-3 float-right"
-                onClick={this.onSubmitForm}
-                >
+                onClick={this.onSubmitForm}>
               Xác Nhận
             </button>
             <button
               onClick={this.onCloseForm}
-              className="btn btn-primary mt-5 mx-3 float-right"
-            >
+              className="btn btn-primary mt-5 mx-3 float-right">
               Hủy
             </button>
           </div>

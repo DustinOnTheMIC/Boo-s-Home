@@ -25,10 +25,9 @@ class Navbar extends Component {
         this.state.login ? liLogOut.classList.remove('d-none') : liLogOut.classList.add('d-none')
         //if login -> not visible li login
         this.state.login ? liLogin.classList.add('d-none') : liLogin.classList.remove('d-none')
-
     }
 
-    handleScroll = (event) => {
+    handleScroll = () => {
         let navbar = document.getElementById('navbar')
         //scroll >10 -> make navbar background secondary-color and back
         if(document.body.scrollTop > 10 || document.documentElement.scrollTop > 10){
