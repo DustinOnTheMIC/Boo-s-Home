@@ -16,3 +16,9 @@
         width:80%
     }
 }
+
+@media (max-width:500px){
+    .one-box{
+        width:100%
+    }
+}

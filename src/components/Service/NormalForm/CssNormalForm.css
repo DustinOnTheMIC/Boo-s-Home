@@ -1,0 +1,5 @@
+.scroll, #scrollDiv{
+    height: calc(100% - 20px);
+    width: 100%;
+    overflow-y: auto;
+}

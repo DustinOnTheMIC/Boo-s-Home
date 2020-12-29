@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './CssNavbar.css';
-import logo from '../../logo/logo.png'
+import {Link} from 'react-router-dom' 
+
 
 class Navbar extends Component {
 
@@ -8,7 +9,8 @@ class Navbar extends Component {
         super(props);
         this.state = {
             product: [{id: 1, name: 'asd'}],
-            login: localStorage.getItem('idAccount') == null ? false : true //status user
+            login: localStorage.getItem('idAccount') == null ? false : true, //status user
+            countToggle: false
         }
     }
 
@@ -39,21 +41,40 @@ class Navbar extends Component {
         }
     }
 
+    handleToggle = () => {
+        let {countToggle} = this.state
+        let div = document.getElementById('toggleDiv')
+        let ul = document.getElementById('ulItems')
+        countToggle = !countToggle
+        if(countToggle) {
+            div.classList.add('bg-secondary')
+            ul.classList.add('text-center')
+            this.setState({countToggle : countToggle})
+        }else{
+            setTimeout(() => {
+                div.classList.remove('bg-secondary')
+                ul.classList.remove('text-center')
+            }, 450);
+            this.setState({countToggle : countToggle})
+        }
+        
+    }
+
     handleLogout = () => {
         localStorage.clear()
     }
 
     render() {
         return (
-            <nav id="navbar" className="navbar navbar-expand-md navbar-light bg-secondary sticky-top nav-size bg-transparent">
-                <div className="container-fluid">
-                    <a href="/" className="navbar-brand col-6"><img className="logo-size" src={logo} alt='asd'/></a>
-                    <button type="button" className="navbar-toggler" data-toggle="collapse" data-target="#navCollapse"
+            <nav id="navbar" className="navbar navbar-expand-md navbar-light bg-secondary sticky-top nav-size bg-transparent px-0 pt-0">
+                <div id='toggleDiv' className="container-fluid">
+                    <a href="/"><img alt='logo' className="logo-size" src="https://img.icons8.com/cotton/64/000000/cat--v1.png"/></a>
+                    <button id='buttonToggle' type="button" className="navbar-toggler" onClick={this.handleToggle} data-toggle="collapse" data-target="#navCollapse"
                         aria-controls="navCollapse">
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse" id="navCollapse">
-                        <ul className="navbar-nav ml-auto float-right">
+                        <ul id='ulItems' className="navbar-nav ml-auto ">
                             <li className="nav-item">
                                 <a href="#home" className="nav-link text-light text-title active">Home</a>
                             </li>

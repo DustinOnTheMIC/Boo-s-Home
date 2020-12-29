@@ -15,8 +15,9 @@
     height: 800px;
 }
 
-.content-div-right{
-
+.text-title-register{
+    font-weight: bold;
+    font-size: 50px;
 }
 
 @media (max-width:768px){

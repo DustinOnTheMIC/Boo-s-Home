@@ -15,12 +15,21 @@
     height: 800px;
 }
 
-.content-div-right{
-
+.button-group{
+    float: right
+}
+.text-title-login{
+    font-weight: bold;
+    font-size: 50px;
 }
 
 @media (max-width:767px){
     .div-left{
         height: 500px;
     }
+    .button-group{
+        text-align: center!important;
+        float: none;
+    }
+    
 }

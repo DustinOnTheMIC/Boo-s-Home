@@ -24,7 +24,7 @@ const router = [
     { 
         path: '/register',
         exact: true,
-        main: ({history, location}) => <Register history={history} location={location}/>
+        main: ({history}) => <Register history={history} />
     }
 ]
 

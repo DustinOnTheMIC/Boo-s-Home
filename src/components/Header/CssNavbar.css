@@ -1,13 +1,15 @@
 .logo-size{
-    width: 100%;
+    height: -webkit-fill-available;
 }
 
 .text-title{
     font-size: 18px;
 }
 
-@media (min-width:1366px){
-    .logo-size{
-        width: 50%;
-    }
+.bg-secondary{
+    background-color:#3D3D3D!important
+}
+
+#buttonToggle:focus{
+    background: none !important
 }

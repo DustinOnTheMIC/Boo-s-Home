@@ -97,9 +97,9 @@ class NormalForm extends Component {
   render() {
       const {title, id} = this.props;
     return (
-      <div id={id} className="container-fluid mt-5 form-shower d-none">
+      <div id={id} className="container-fluid mt-5 form-shower d-none scroll">
         <div className="row justify-content-center">
-          <div className="col-12 col-lg-6 bg-light rounded mt-5 pb-5 ">
+          <div id='scrollDiv' className="col-12 col-lg-6 bg-light rounded mt-5 pb-5 ">
             <h1 className="text-center">{title}</h1>
             <DatePicker id={`DatePicker${id}`} onChangeDate={this.onChangeDate} />
             <TimePicker id={`TimePicker${id}`} handleChange={this.handleChangeTime} />

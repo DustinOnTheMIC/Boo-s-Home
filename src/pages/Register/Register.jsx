@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
+import './CssRegister.css'
 
 class Register extends Component {
 
@@ -23,7 +24,7 @@ class Register extends Component {
 
     handleSubmit = () => {
         const { userName, password, rePassword } = this.state;
-        const {history, location} = this.props;
+        const {history} = this.props;
         var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
         if(!password || !userName || !rePassword)
             alert('require all value')
@@ -34,7 +35,7 @@ class Register extends Component {
             alert('user name must be a valid pattern for email')
         }
         history.goBack()
-        console.log('submited');
+        // console.log('submited');
     }
 
     render() {
@@ -56,7 +57,9 @@ class Register extends Component {
                             </div>
                         </div>
                         <div className="div-right col-12 col-md-8 mx-0 px-0">
-                            <h1 className="text-center mb-5">Boo's Home</h1>
+                            <div className='text-center '>
+                                <a href='/' className="text-title-register mb-5">Boo's Home</a>
+                            </div>
                             <div className="row justify-content-center mt-5">
                                 <div className="content-div-right col-10 col-md-6">
                                     <input className='mb-3' type="text" name='userName' onChange={this.handleChange} placeholder="Gmail"></input>

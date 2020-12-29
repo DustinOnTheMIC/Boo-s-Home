@@ -10,7 +10,7 @@ class index extends Component {
             <div>
                 <Header/>
                 <Body/>
-                <Footer/>
+                <Footer/> 
             </div>
         );
     }

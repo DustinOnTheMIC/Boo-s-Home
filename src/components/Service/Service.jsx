@@ -38,8 +38,8 @@ class Service extends Component {
         this.handleActive('div1','button1')
     }
 
-    onShowForm = (formControl) => {
-        document.getElementById(formControl).classList.remove('d-none');
+    onShowForm = (formcontrol) => {
+        document.getElementById(formcontrol).classList.remove('d-none');
     }
 
     onSubmitForm = (value) => {
@@ -69,7 +69,7 @@ class Service extends Component {
             vài năm chỉ vì bạn không sớm phát hiện bệnh của chúng.</p>
         
     return(
-        <div id='service' className="col-12 justify-content-center">
+        <div id='service' className="col-12 justify-content-center pl-0">
             <div className="container-fluid col-11 col-md-9" style={{zIndex:'10', color:'white', position:'relative'}}>
                 <div className="justify-content-center col-12 container-fluid">
                     <OneButton id="button1" onClick={()=> this.handleActive('div1','button1')} title="Vệ Sinh" control="div1" target="#div1"/>
@@ -79,22 +79,22 @@ class Service extends Component {
                 </div>
                 <div className="justify-content-center container-fluid">
                     <div id="div1" className="collapse col-sm-12 justify-content-center show row text-dark bg-light mx-0">
-                        <OneService title="Tắm Rửa Chó Mèo" price="200.000đ" onClickService={this.onShowForm} formControl='formShower' content={shower}/>
-                        <OneService title="Tỉa Lông" price="100.000đ" onClickService={this.onShowForm} formControl='formTrim' content={trim}/>
-                        <OneService title="Vệ Sinh Tuyến Mồ Hôi" price="+50%" onClickService={this.onShowForm} formControl='formSpecialClean' content={specialClean}/>
-                        <OneService title="Xả lông" price="100.000đ" onClickService={this.onShowForm} formControl='formConditioner' content={conditioner}/>
+                        <OneService title="Tắm Rửa Chó Mèo" price="200.000đ" onClickService={this.onShowForm} formcontrol='formShower' content={shower}/>
+                        <OneService title="Tỉa Lông" price="100.000đ" onClickService={this.onShowForm} formcontrol='formTrim' content={trim}/>
+                        <OneService title="Vệ Sinh Tuyến Mồ Hôi" price="+50%" onClickService={this.onShowForm} formcontrol='formSpecialClean' content={specialClean}/>
+                        <OneService title="Xả lông" price="100.000đ" onClickService={this.onShowForm} formcontrol='formConditioner' content={conditioner}/>
                     </div>
                     <div id="div2" className="collapse col-sm-12 justify-content-center show row text-dark bg-light mx-0">
-                        <OneService title="Khám Tổng Quát" formControl='formAdvisory' onClickService={this.onShowForm} price="100.000đ" content={physicalTest}/>
-                        <OneService title="Tiểu Phẫu" formControl='formPhysicalTest' onClickService={this.onShowForm} price="100.000đ" content={conditioner}/>
+                        <OneService title="Khám Tổng Quát" formcontrol='formAdvisory' onClickService={this.onShowForm} price="100.000đ" content={physicalTest}/>
+                        <OneService title="Tiểu Phẫu" formcontrol='formPhysicalTest' onClickService={this.onShowForm} price="100.000đ" content={conditioner}/>
                     </div>
                     <div id="div3" className="collapse col-sm-12 justify-content-center show row text-dark bg-light mx-0">
-                        <OneService title="Trong Ngày" formControl='formTakeCareDay' onClickService={this.onShowForm} price="100.000đ" content={shower}/>
-                        <OneService title="Nhiều ngày" formControl='formTakeCareManyDay' onClickService={this.onShowForm} price="+ 50%" content={trim}/>
+                        <OneService title="Trong Ngày" formcontrol='formTakeCareDay' onClickService={this.onShowForm} price="100.000đ" content={shower}/>
+                        <OneService title="Nhiều ngày" formcontrol='formTakeCareManyDay' onClickService={this.onShowForm} price="+ 50%" content={trim}/>
                     </div>
                     <div id="div4" className="collapse col-sm-12 justify-content-center show row text-dark bg-light mx-0">
-                        <OneService title="Trong Ngày" formControl='formHealth' onClickService={this.onShowForm} price="100.000đ" content={specialClean}/>
-                        <OneService title="Nhiều ngày" formControl='formHealth' onClickService={this.onShowForm} price="+50%" content={conditioner}/>
+                        <OneService title="Trong Ngày" formcontrol='formHealth' onClickService={this.onShowForm} price="100.000đ" content={specialClean}/>
+                        <OneService title="Nhiều ngày" formcontrol='formHealth' onClickService={this.onShowForm} price="+50%" content={conditioner}/>
                     </div>
                 </div>
             </div>

@@ -27,13 +27,7 @@ class Login extends Component {
 
     handleLogin = () => {
         localStorage.setItem('idAccount','id account')
-        const {history, location} = this.props
-        // // console.log(this.state);
-        console.log('history asd',history);
-        console.log('location: ',location);
-        // console.log('length: ',history.length);
-        // console.log('location: ', prevProps.location);
-        // console.log('key: ', location.key);
+        const {history} = this.props
         history.goBack()
     }
 
@@ -55,12 +49,14 @@ class Login extends Component {
                             </div>
                         </div>
                         <div className="div-right col-12 col-md-8 mx-0 px-0">
-                            <h1 className="text-center mb-5">Boo's Home</h1>
+                            <div className="text-center">
+                                <a href="/" className="mb-5 text-title-login">Boo's Home</a>
+                            </div>
                             <div className="row justify-content-center mt-5">
                                 <div className="content-div-right col-10 col-md-6">
                                     <input className='mb-3' type="text" name='userName' onChange={this.handleChange} placeholder="Tên đăng nhập / Gmail"></input>
                                     <input className='mt-3' type="password" name='password' onChange={this.handleChange} placeholder="Mật khẩu"></input>
-                                    <div className="float-right mt-5">
+                                    <div className="mt-5 button-group">
                                         <Link className="btn btn-primary mx-1 my-4" to='/register'>Đăng Kí</Link>
                                         <Link className="btn btn-secondary mx-1 my-4" to='#this' onClick={this.handleLogin}>Đăng Nhập</Link>
                                     </div>
