@@ -11,7 +11,7 @@
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.2.2",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "react": "^17.0.1",
     "react-date-picker": "^8.0.5",
     "react-datepicker": "^3.3.0",
@@ -48,7 +48,7 @@
       "last 1 safari version"
     ]
   },
-  "a" :{
+  "a": {
     "name": "myapp",
     "description": "a really cool app",
     "version": "1.0.0",
