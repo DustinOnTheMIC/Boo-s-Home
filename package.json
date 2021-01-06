@@ -2,6 +2,9 @@
   "name": "ssclean",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "14.4.0"
+  },
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@mobiscroll/react": "https://npm.mobiscroll.com/@mobiscroll/react-trial/-/react-trial-5.0.0-beta6.tgz",
@@ -44,5 +47,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "a" :{
+    "name": "myapp",
+    "description": "a really cool app",
+    "version": "1.0.0",
+    "engines": {
+      "node": "6.11.1"
+    }
   }
 }
