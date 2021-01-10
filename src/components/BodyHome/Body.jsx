@@ -25,7 +25,6 @@ class body extends Component {
                         <AboutUs/>
                     </div>
                 </div>
-                <h1>asdasdasd ngu ngu ngu</h1>
             </div>
         );
     }
