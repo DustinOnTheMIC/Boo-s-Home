@@ -9,7 +9,8 @@ class Login extends Component {
         super(props)
         this.state = {
             userName: '',
-            password: ''
+            password: '',
+            token: '',
         }
     }
 
@@ -27,7 +28,7 @@ class Login extends Component {
     }
 
     handleLogin = (e) => {
-        localStorage.setItem('idAccount','id account')
+
         // const {history} = this.props
         // history.goBack()
 
@@ -44,9 +45,21 @@ class Login extends Component {
         // .catch(function (error) {
         //     console.log(error);
         // });
+
         e.preventDefault();
-        axios.get('https://dichvuthucung.herokuapp.com').then(resp => {
-            console.log(resp.data.length());
+        const {email, password} = this.props;
+        const input={
+            email: email,
+            password: password
+        };
+        let token = ''
+        axios.post('https://dichvuthucung.herokuapp.com', input).then(resp => {
+            token = resp.data.access_token
+            if(token.length() !== 0) {
+                localStorage.setItem('token', token)
+                const {history} = this.props
+                history.goBack()
+            }
         });
     }
 
