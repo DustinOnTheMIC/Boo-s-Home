@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../Login/CssLogin.css'
 import {Link} from 'react-router-dom'
+import axios from 'axios';
 
 class Login extends Component {
 
@@ -25,16 +26,34 @@ class Login extends Component {
         console.log('updated: ', prevProps.location);
     }
 
-    handleLogin = () => {
+    handleLogin = (e) => {
         localStorage.setItem('idAccount','id account')
-        const {history} = this.props
-        history.goBack()
+        // const {history} = this.props
+        // history.goBack()
+
+        // var instance = axios.create({
+        //     baseURL: 'http://boohome.herokuapp.com/api/',
+        //     timeout: 1000,
+        //     headers: {'X-Custom-Header': 'foobar'}
+        // });
+
+        // axios.get('/user?ID=12345')
+        // .then(function (response) {
+        //     console.log(response);
+        // })
+        // .catch(function (error) {
+        //     console.log(error);
+        // });
+        e.preventDefault();
+        axios.get('https://dichvuthucung.herokuapp.com').then(resp => {
+            console.log(resp.data.length());
+        });
     }
 
     render() {
         console.log( this.props);
         return (
-            <div className="container-fluid mx-0 px-0 bg-light">
+            <form className="container-fluid mx-0 px-0 bg-light">
                 <div className="col-12 mx-0 px-0">
                     <div className="row">
                         <div className="div-left col-12 col-md-3 mx-0 px-0 bg-dark">
@@ -65,7 +84,7 @@ class Login extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         );
     }
 }
