@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import './CssService.css';
 import OneButton from './OneButton/OneButton'
 import OneService from './OneService/OneService'
@@ -13,7 +14,7 @@ class Service extends Component {
         super(props)
         this.state = {
             id: localStorage.getItem('idAccount'),
-            Services: []
+            
         }
     }
 
@@ -48,6 +49,9 @@ class Service extends Component {
 
     onCloseForm = (id) => {
         document.getElementById(`${id}`).classList.add('d-none');
+        // ReactDOM.unmountComponentAtNode(document.getElementById(id))
+        // document.getElementById(`${id}`).style. = 'hidden';
+
     }
 
     render() {
@@ -79,35 +83,35 @@ class Service extends Component {
                 </div>
                 <div className="justify-content-center container-fluid">
                     <div id="div1" className="collapse col-sm-12 justify-content-center show row text-dark bg-light mx-0">
-                        <OneService title="Tắm Rửa Chó Mèo" price="200.000đ" onClickService={this.onShowForm} formcontrol='formShower' content={shower}/>
-                        <OneService title="Tỉa Lông" price="100.000đ" onClickService={this.onShowForm} formcontrol='formTrim' content={trim}/>
-                        <OneService title="Vệ Sinh Tuyến Mồ Hôi" price="+50%" onClickService={this.onShowForm} formcontrol='formSpecialClean' content={specialClean}/>
-                        <OneService title="Xả lông" price="100.000đ" onClickService={this.onShowForm} formcontrol='formConditioner' content={conditioner}/>
+                        <OneService title="Tắm Rửa Chó Mèo" price="200.000đ" onClickService={this.onShowForm} formcontrol='1' content={shower}/>
+                        <OneService title="Tỉa Lông" price="100.000đ" onClickService={this.onShowForm} formcontrol='2' content={trim}/>
+                        <OneService title="Vệ Sinh Tuyến Mồ Hôi" price="+50%" onClickService={this.onShowForm} formcontrol='3' content={specialClean}/>
+                        <OneService title="Xả lông" price="100.000đ" onClickService={this.onShowForm} formcontrol='4' content={conditioner}/>
                     </div>
                     <div id="div2" className="collapse col-sm-12 justify-content-center show row text-dark bg-light mx-0">
-                        <OneService title="Khám Tổng Quát" formcontrol='formAdvisory' onClickService={this.onShowForm} price="100.000đ" content={physicalTest}/>
-                        <OneService title="Tiểu Phẫu" formcontrol='formPhysicalTest' onClickService={this.onShowForm} price="100.000đ" content={conditioner}/>
+                        <OneService title="Khám Tổng Quát" formcontrol='5' onClickService={this.onShowForm} price="100.000đ" content={physicalTest}/>
+                        <OneService title="Tiểu Phẫu" formcontrol='6' onClickService={this.onShowForm} price="100.000đ" content={conditioner}/>
                     </div>
                     <div id="div3" className="collapse col-sm-12 justify-content-center show row text-dark bg-light mx-0">
-                        <OneService title="Trong Ngày" formcontrol='formTakeCareDay' onClickService={this.onShowForm} price="100.000đ" content={shower}/>
-                        <OneService title="Nhiều ngày" formcontrol='formTakeCareManyDay' onClickService={this.onShowForm} price="+ 50%" content={trim}/>
+                        <OneService title="Trong Ngày" formcontrol='7' onClickService={this.onShowForm} price="100.000đ" content={shower}/>
+                        <OneService title="Nhiều ngày" formcontrol='8' onClickService={this.onShowForm} price="+ 50%" content={trim}/>
                     </div>
                     <div id="div4" className="collapse col-sm-12 justify-content-center show row text-dark bg-light mx-0">
-                        <OneService title="Trong Ngày" formcontrol='formHealth' onClickService={this.onShowForm} price="100.000đ" content={specialClean}/>
-                        <OneService title="Nhiều ngày" formcontrol='formHealth' onClickService={this.onShowForm} price="+50%" content={conditioner}/>
+                        <OneService title="Trong Ngày" formcontrol='9' onClickService={this.onShowForm} price="100.000đ" content={specialClean}/>
+                        <OneService title="Nhiều ngày" formcontrol='10' onClickService={this.onShowForm} price="+50%" content={conditioner}/>
                     </div>
                 </div>
             </div>
-            <NormalFormm id='formShower' title='Đặt Lịch Tắm' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm}/> 
-            <NormalFormm id='formTrim' title='Đặt Lịch Tỉa Lông' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm}/>
-            <NormalFormm id='formSpecialClean' title='Đặt Lịch Special Clean' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm}/>
-            <NormalFormm id='formConditioner' title='Đặt Lịch Xả Lông' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm}/>
-            <NormalFormm id='formAdvisory' title='Khám Tổng Quát' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm}/>
-            <NormalFormm id='formPhysicalTest' title='Tiểu Phẩu' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm}/>
-            <TakeCareForm id='formTakeCareDay' title='Trông Coi Trong Ngày' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm}/>
-            <TakeCareForm id='formTakeCareManyDay' title='Trông Coi Nhiều Ngày' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm}/>
-            <NormalFormm id='formAdvisory' title='Tiểu Phẩu' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm}/>
-            <NormalFormm id='formAdvisory' title='Tiểu Phẩu' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm}/>
+            <NormalFormm id='1' title='Đặt Lịch Tắm' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/> 
+            <NormalFormm id='2' title='Đặt Lịch Tỉa Lông' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
+            <NormalFormm id='3' title='Vệ Sinh Tuyến Mồ Hôi' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
+            <NormalFormm id='4' title='Đặt Lịch Xả Lông' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
+            <NormalFormm id='5' title='Khám Tổng Quát' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
+            <NormalFormm id='6' title='Tiểu Phẩu' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
+            <TakeCareForm id='7' title='Trông Coi Trong Ngày' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
+            <TakeCareForm id='8' title='Trông Coi Nhiều Ngày' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
+            <NormalFormm id='9' title='Tiểu Phẩu' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
+            <NormalFormm id='10' title='Tiểu Phẩu' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
         </div>);
     }
 }

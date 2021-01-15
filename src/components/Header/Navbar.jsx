@@ -32,13 +32,15 @@ class Navbar extends Component {
     handleScroll = () => {
         let navbar = document.getElementById('navbar')
         //scroll >10 -> make navbar background secondary-color and back
-        if(document.body.scrollTop > 10 || document.documentElement.scrollTop > 10){
-            navbar.classList.add("bg-secondary")
-            navbar.classList.remove("bg-transparent")
-        }else{
-            navbar.classList.add("bg-transparent")
-            navbar.classList.remove("bg-secondary")
-        }
+        if(navbar !== null)
+            if(document.body.scrollTop > 10 || document.documentElement.scrollTop > 10){
+                navbar.classList.add("bg-secondary")
+                navbar.classList.remove("bg-transparent")
+            }else{
+                navbar.classList.add("bg-transparent")
+                navbar.classList.remove("bg-secondary")
+            }
+        
     }
 
     handleToggle = () => {

@@ -17,7 +17,7 @@ class body extends Component {
                         </div>
                     </div>
                 </div>
-                <Service/>
+                <Service history={this.props.history}/>
                 <div id='aboutUs'>
                     <div style={{height:'400px'}}></div>
                     <div style={{paddingBottom: '200px'}} className="container-fluid col-12 col-md-9">

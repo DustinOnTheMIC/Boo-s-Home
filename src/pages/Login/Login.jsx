@@ -2,69 +2,80 @@ import React, { Component } from 'react';
 import '../Login/CssLogin.css'
 import {Link} from 'react-router-dom'
 import axios from 'axios';
+import Alert from './../../components/Alert/Alert'
 
 class Login extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            userName: '',
-            password: '',
             token: '',
+            alert:{
+                count: 0,
+                addClass: 'd-none'
+            }
         }
     }
+
+    email = ''
+    password = ''
 
     handleChange = (e) =>{
         let target = e.target;
         let value = target.value;
         const NAME = target.name
-        this.setState({
-            [NAME]: value
-        })
-    }
-
-    componentDidUpdate(prevProps){
-        console.log('updated: ', prevProps.location);
+        if(NAME === 'email')
+            this.email = value
+        if(NAME === 'password')
+            this.password = value
     }
 
     handleLogin = (e) => {
-
-        // const {history} = this.props
-        // history.goBack()
-
-        // var instance = axios.create({
-        //     baseURL: 'http://boohome.herokuapp.com/api/',
-        //     timeout: 1000,
-        //     headers: {'X-Custom-Header': 'foobar'}
-        // });
-
-        // axios.get('/user?ID=12345')
-        // .then(function (response) {
-        //     console.log(response);
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
-
         e.preventDefault();
-        const {email, password} = this.props;
+        
         const input={
-            email: email,
-            password: password
+            email: this.email,
+            password: this.password
         };
-        let token = ''
+
+        this.callAPI(input);
+    }
+
+    callAPI = (input) => {  
         axios.post('https://dichvuthucung.herokuapp.com', input).then(resp => {
-            token = resp.data.access_token
-            if(token.length() !== 0) {
+            let token = resp.data.data.access_token
+            if(token.length !== 0) {
                 localStorage.setItem('token', token)
                 const {history} = this.props
                 history.goBack()
             }
+        })
+        .catch(err => {
+            const {count} = this.state.alert
+            let alert = {
+                addClass:'',
+                count: count + 1,
+                content: err,
+                titleButtonConfirm: 'Ok Nha',
+                titleButtonCancel: 'Ok luôn',
+                titleAlert:'Thông Báo',
+                isConfirm: false,
+            }
+            this.setState({alert: alert})
         });
     }
 
+    closeAlert = () => {
+        const {count} = this.state.alert
+        let alert = {
+            addClass:'d-none',
+            count: count + 1,
+        }
+        this.setState({alert: alert})
+    }
+
     render() {
-        console.log( this.props);
+        const { titleAlert, titleButtonCancel, titleButtonConfirm, content, addClass, count, isConfirm} = this.state.alert;
         return (
             <form className="container-fluid mx-0 px-0 bg-light">
                 <div className="col-12 mx-0 px-0">
@@ -86,7 +97,7 @@ class Login extends Component {
                             </div>
                             <div className="row justify-content-center mt-5">
                                 <div className="content-div-right col-10 col-md-6">
-                                    <input className='mb-3' type="text" name='userName' onChange={this.handleChange} placeholder="Tên đăng nhập / Gmail"></input>
+                                    <input className='mb-3' type="text" name='email' onChange={this.handleChange} placeholder="Tên đăng nhập / Gmail"></input>
                                     <input className='mt-3' type="password" name='password' onChange={this.handleChange} placeholder="Mật khẩu"></input>
                                     <div className="mt-5 button-group">
                                         <Link className="btn btn-primary mx-1 my-4" to='/register'>Đăng Kí</Link>
@@ -97,6 +108,17 @@ class Login extends Component {
                         </div>
                     </div>
                 </div>
+                <Alert
+                    key={count}
+                    titleAlert={titleAlert}
+                    titleButtonCancel={titleButtonCancel}
+                    titleButtonConfirm={titleButtonConfirm}
+                    content={content}
+                    addClass={addClass}
+                    handleConfirmAlert={this.closeAlert}
+                    isConfirm={isConfirm}
+                    handleCancelAlert={this.closeAlert}
+                />
             </form>
         );
     }

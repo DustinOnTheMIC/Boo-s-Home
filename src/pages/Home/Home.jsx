@@ -9,7 +9,7 @@ class index extends Component {
         return (
             <div>
                 <Header/>
-                <Body/>
+                <Body history={this.props.history}/>
                 <Footer/> 
             </div>
         );

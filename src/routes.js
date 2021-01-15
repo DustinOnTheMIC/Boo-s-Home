@@ -9,7 +9,7 @@ const router = [
     {
         path: '/',
         exact: true,
-        main: () => <Home />
+        main: ({history}) => <Home history={history} />
     },
     {
         path: '/notfound',

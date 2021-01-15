@@ -18,7 +18,7 @@ function DatePicker(props) {
                 onChange={
                     date => {
                         setSelectedDate(date);
-                        props.onChangeDate(`${date.getDate()} ${date.getMonth() + 1} ${date.getFullYear()}`);
+                        props.onChangeDate(`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`);
                     
                     }
                 }
