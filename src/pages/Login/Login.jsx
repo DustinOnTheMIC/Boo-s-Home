@@ -42,7 +42,8 @@ class Login extends Component {
     }
 
     callAPI = (input) => {  
-        axios.post('https://dichvuthucung.herokuapp.com', input).then(resp => {
+        axios.post('http://127.0.0.1:8000/api/v1/auth/login', input).then(resp => {
+            console.log('resp: ', resp); 
             let token = resp.data.data.access_token
             if(token.length !== 0) {
                 localStorage.setItem('token', token)
@@ -52,10 +53,16 @@ class Login extends Component {
         })
         .catch(err => {
             const {count} = this.state.alert
+            let fullMessage = ''
+            let errors = err.response.data.errors
+            console.log('1: ',err.response.data);
+            console.log('2: ', errors);
+            Object.keys(errors).map( key => fullMessage += errors[key] +'\n')
+            
             let alert = {
                 addClass:'',
                 count: count + 1,
-                content: err,
+                content: fullMessage,
                 titleButtonConfirm: 'Ok Nha',
                 titleButtonCancel: 'Ok luôn',
                 titleAlert:'Thông Báo',
@@ -63,6 +70,7 @@ class Login extends Component {
             }
             this.setState({alert: alert})
         });
+        
     }
 
     closeAlert = () => {
