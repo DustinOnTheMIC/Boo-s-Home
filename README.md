@@ -7,7 +7,7 @@ This is the steps that you have to do after clone the app
 
 Run this command in terminal to create node_modules folder
 
-### `npm start`
+## `npm start`
 
 Run and test this app in your browser
 
