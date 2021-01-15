@@ -1,3 +1,21 @@
+###########################################################################
+# Clone app
+
+This is the steps that you have to do after clone the app
+
+## `npm install`
+
+Run this command in terminal to create node_modules folder
+
+### `npm start`
+
+Run and test this app in your browser
+
+### Warning
+
+The API was not running right now, so this app just run in front-end, you have to delete or command the code anywhere have the callAPI method
+
+###########################################################################
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
