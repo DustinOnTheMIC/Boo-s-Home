@@ -13,12 +13,14 @@ class TakeCareForm extends Component {
     this.state = {
       order: {
         service_id: this.props.id,
+        user_id:''
       },
       alert: {
         addClass:'d-none',
         count: 1,
         isConfirm: false
-      }
+      },
+      isSuccess: false
     }
   }
 
@@ -28,11 +30,12 @@ class TakeCareForm extends Component {
   time_go = '8:0'
   note = ''
   service_id = ''
-  user_id = 'qưe'
+  user_id = ''
 
   componentDidMount = () =>{
+    // console.log(localStorage.getItem('user_id'));
     this.setState(
-      {user_id: 'id account'}
+      {user_id: localStorage.getItem('user_id')}
     )
     this.setState(
       {service_id: this.props.id}
@@ -118,7 +121,7 @@ class TakeCareForm extends Component {
         isConfirm: isConfirm
       }
       this.setState({alert: alert})
-    }else if(!this.state.order.user_id){
+    }else if(this.user_id===null){
       this.props.history.push('/Login')
     }
     if(isConfirm === false){
@@ -129,36 +132,17 @@ class TakeCareForm extends Component {
       }
       this.setState({alert: alert})
       //call API here
-      this.callAPI(count)
+      console.log('order: ',this.state.order);
+      this.CallAPI(this.state.order)
       this.resetAlert()
       this.props.onCloseForm(this.props.id)
-      
     }
-    
-  }
-
-  callAPI = (count) => {
-    axios.post('https://dichvuthucung.herokuapp.com', this.state.order).then(resp => {
-        let message = resp.data.message
-        if(message.length !== 0) {
-          let alert = {
-            addClass:'',
-            count: count + 1,
-            content: message,
-            titleButtonConfirm: 'Ok Nha',
-            titleButtonCancel: 'Không Đặt Nữa',
-            titleAlert:'Thông Báo',
-            isConfirm: false
-          }
-        this.setState({alert: alert})
-      }
-    });
   }
 
   onSubmitForm = () => {
     let order = {
       service_id: this.props.id,
-      user_id: this.user_id,
+      user_id:this.state.user_id,
       date: this.date,
       time: this.time,
       date_go: this.date_go,
@@ -180,8 +164,18 @@ class TakeCareForm extends Component {
         count: count + 1
       }
       this.setState({alert: alert})
-    }
-    else if(!this.state.alert.isConfirm){
+    }else if(this.user_id===null){
+      let alert = {
+        content:'Không được đâu bạn ơi, bạn phải đăng nhập cái đã',
+        to: '/Login',
+        titleButtonConfirm: 'Ok Đăng Nhập',
+        titleButtonCancel: 'Không Đặt Nữa',
+        titleAlert:'Thông Báo',
+        addClass:'',
+        count: count + 1
+      }
+      this.setState({alert: alert})
+    }else if(!this.state.alert.isConfirm){
       let alert = {
         content:'Hãy xác nhận thông tin của bạn là chính xác nhaaaa',
         to: '',
@@ -193,7 +187,39 @@ class TakeCareForm extends Component {
         isConfirm: false
       }
       this.setState({alert: alert})
+    }else if(this.state.alert.isConfirm){
+      //call api
     }
+  }
+
+  async CallAPI(input){
+    await axios.post('http://127.0.0.1:8000/api/v1/service/add', input).then(resp => {
+          this.setState({isSuccess: true})
+          setTimeout(() => {
+            this.props.onCloseForm(this.props.id, this.state.isSuccess, true)
+          }, 10);
+        })
+        .catch(err => {
+            console.log(err.message)
+            let errors = err.message.split(' ')
+            let errorsCode = errors[errors.length -1]
+            let message = ''
+            console.log(typeof(errorsCode));
+            if(errorsCode==='400'){
+              message = 'Thất bại'
+            }
+            const {count} = this.state.alert 
+            let alert = {
+                addClass:'',
+                count: count + 1,
+                content: message,
+                titleButtonConfirm: 'Ok Nha',
+                titleButtonCancel: 'Ok luôn',
+                titleAlert:'Thông Báo',
+                isConfirm: false,
+            }
+            this.setState({alert: alert})
+        });
   }
 
   resetAlert() {
@@ -207,14 +233,14 @@ class TakeCareForm extends Component {
   }
 
   onCloseForm = () => {
-    this.props.onCloseForm(this.props.id)
+    this.props.onCloseForm(this.props.id, false, false)
     this.resetAlert()
   }
 
 
   render() {
     const {title, id, history} = this.props;
-    const { titleAlert, titleButtonCancel, to, titleButtonConfirm, content, addClass, count, isConfirm} = this.state.alert;
+    const { titleAlert, titleButtonCancel, titleButtonConfirm, content, addClass, count, isConfirm} = this.state.alert;
     return (
       <div id={id} className="container-fluid mt-5 form-shower d-none scroll">
         <div className="row justify-content-center">

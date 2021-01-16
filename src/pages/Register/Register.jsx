@@ -17,6 +17,7 @@ class Register extends Component {
     }
     email = ''
     phone = ''
+    name = ''
     password = ''
     rePassword = ''
 
@@ -32,63 +33,61 @@ class Register extends Component {
             this.password = value
         if(NAME === 'rePassword')
             this.rePassword = value
+        if(NAME === 'name')
+            this.name = value
     }
 
     handleSubmit = () => {
         const {count} = this.state.alert
-        var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        let pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        let message = ''
+        let flag = false
+        
         if(this.password==='' || this.userName==='' || this.rePassword===''){
-            let alert = {
-                addClass:'',
-                count: count + 1,
-                content: 'Điền cho đủ thông tin chứ bạn ơi???',
-                titleButtonConfirm: 'Ok lại',
-                titleButtonCancel: 'Ok lại luôn',
-                titleAlert:'Thông Báo',
-                isConfirm: false,
-            }
-            this.setState({alert: alert})
-        }
-        else if(this.password !== this.rePassword){
-            let alert = {
-                addClass:'',
-                count: count + 1,
-                content: 'ủa rồi mật khẩu với nhắc lại mật khẩu mà sao khác nhau được bạn???',
-                titleButtonConfirm: 'Ok lại',
-                titleButtonCancel: 'Ok lại luôn',
-                titleAlert:'Thông Báo',
-                isConfirm: false,
-            }
-            this.setState({alert: alert})
-        }
-        else if(!pattern.test(this.email)){
-            let alert = {
-                addClass:'',
-                count: count + 1,
-                content: 'Bạn biết cái email nó ra làm sao k???',
-                titleButtonConfirm: 'Ok lại',
-                titleButtonCancel: 'Ok lại luôn',
-                titleAlert:'Thông Báo',
-                isConfirm: false,
-            }
-            this.setState({alert: alert})
+            message = 'Điền cho đủ thông tin chứ bạn ơi???'
+        }else if(this.password !== this.rePassword){
+            message= 'ủa rồi mật khẩu với nhắc lại mật khẩu mà sao khác nhau được bạn???'
+        }else if(!pattern.test(this.email)){
+            message = 'Bạn biết cái email nó ra làm sao k???'
+        }else if(this.name.length <= 3){
+            message = `Tên gì có ${this.name.length} chữ rứa bạn???`
+        }else if(this.password.length < 8){
+            message = 'Mật khẩu phải từ 8 kí tự nha bạn ơi'
+        }else if(this.phone.length !== 10){
+            message = `Bạn kể cho tui sđt nào có ${this.phone.length} số mà k phải của tổng đài đi!!!`
         }else{
+            flag = true
+        }
+        
+        if(flag){
             let register = {
                 email: this.email,
                 phone: this.phone,
+                name: this.name,
                 password: this.password,
             }
             this.callAPI(register)
+        }else{
+            let alert = {
+            addClass:'',
+            count: count + 1,
+            content: message,
+            titleButtonConfirm: 'Ok lại',
+            titleButtonCancel: 'Ok lại luôn',
+            titleAlert:'Thông Báo',
+            isConfirm: false,
+            }
+            this.setState({alert: alert})
         }
     }
 
-    callAPI = (input) => {  
-        axios.post('https://dichvuthucung.herokuapp.com', input).then(resp => {
+    async callAPI (input) {  
+        await axios.post('http://127.0.0.1:8000/api/v1/auth/register', input).then(resp => {
             let token = resp.data.data.access_token
             if(token.length !== 0) {
                 localStorage.setItem('token', token)
                 const {history} = this.props
-                history.goBack()
+                history.push('/Login')
             }
         })
         .catch(err => {
@@ -96,7 +95,7 @@ class Register extends Component {
             let alert = {
                 addClass:'',
                 count: count + 1,
-                content: err,
+                content: 'Gmail này bạn tạo rồi mà, lấy cái khác đi bạn ơi',
                 titleButtonConfirm: 'Ok Nha',
                 titleButtonCancel: 'Ok luôn',
                 titleAlert:'Thông Báo',
@@ -142,6 +141,7 @@ class Register extends Component {
                                 <div className="content-div-right col-10 col-md-6">
                                     <input className='mb-3' type="text" name='email' onChange={this.handleChange} placeholder="Gmail"></input>
                                     <input className='mb-3' type="number" name='phone' onChange={this.handleChange} placeholder="Phone number"></input>
+                                    <input className='mb-3' type="text" name='name' onChange={this.handleChange} placeholder="Họ tên của bạn"></input>
                                     <input className='mb-3' type="password" name='password' onChange={this.handleChange} placeholder="Mật khẩu"></input>
                                     <input className='mb-3' type="password" name='rePassword' onChange={this.handleChange} placeholder="Xác Nhận Mật Khẩu"></input>
                                     <div className="mt-5 col-12">

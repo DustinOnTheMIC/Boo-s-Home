@@ -17,7 +17,8 @@ class NormalForm extends Component {
       alert: {
         addClass:'d-none',
         count: 1
-      }
+      },
+      isSuccess: false
     }
   }
 
@@ -29,7 +30,7 @@ class NormalForm extends Component {
 
   componentDidMount = () =>{
     // this.user_id = localStorage.getItem('token')
-    this.user_id = 'ádasdasd'
+    this.setState({user_id: localStorage.getItem('user_id')})
     this.service_id = this.props.id
   }
 
@@ -53,14 +54,13 @@ class NormalForm extends Component {
     e.preventDefault();
     let order = {
       service_id: this.props.id,
-      user_id: this.user_id,
+      user_id:this.state.user_id,
       date: this.date,
       time: this.time,
       date_go: '',
       time_go: '',
       note: this.note
     }
-
     this.setState({order: order})
 
     setTimeout(() => {
@@ -100,9 +100,7 @@ class NormalForm extends Component {
           isConfirm: false
         }
         this.setState({alert: alert})
-
       }
-      
     }, 10);
   }
 
@@ -128,10 +126,8 @@ class NormalForm extends Component {
       }
       this.setState({alert: alert})
       //call API here
-      this.callAPI(count)
-
+      this.CallAPI(this.state.order)
       this.resetAlert()
-      this.props.onCloseForm(this.props.id)
     }
   }
 
@@ -142,22 +138,32 @@ class NormalForm extends Component {
     form.classList.add('d-none')
   }
 
-  callAPI = (count) => {
-    axios.post('https://dichvuthucung.herokuapp.com', this.state.order).then(resp => {
-        let message = resp.data.message
-        if(message.length !== 0) {
-          let alert = {
-            addClass:'',
-            count: count + 1,
-            content: message,
-            titleButtonConfirm: 'Ok Nha',
-            titleButtonCancel: 'Không Đặt Nữa',
-            titleAlert:'Thông Báo',
-            isConfirm: false,
-          }
-        this.setState({alert: alert})
-      }
-    })
+  CallAPI(input){
+     axios.post('http://127.0.0.1:8000/api/v1/service/add', input).then(resp => {
+          this.setState({isSuccess: true})
+          setTimeout(() => {
+            this.props.onCloseForm(this.props.id, this.state.isSuccess, true)
+          }, 10);
+        })
+        .catch(err => {
+            let errors = err.message.split(' ')
+            let errorsCode = errors[errors.length -1]
+            let message = ''
+            if(errorsCode==='400'){
+              message = 'Thất bại'
+            }
+            const {count} = this.state.alert 
+            let alert = {
+                addClass:'',
+                count: count + 1,
+                content: message,
+                titleButtonConfirm: 'Ok Nha',
+                titleButtonCancel: 'Ok luôn',
+                titleAlert:'Thông Báo',
+                isConfirm: false,
+            }
+            this.setState({alert: alert})
+        });
   }
 
   resetAlert() {
@@ -172,7 +178,8 @@ class NormalForm extends Component {
 
 
   onCloseForm = () => {
-    this.props.onCloseForm(this.props.id)
+    console.log(this.state.isSuccess);
+    this.props.onCloseForm(this.props.id, this.state.isSuccess, false)
     this.resetAlert()
   }
 

@@ -9,7 +9,7 @@ class Navbar extends Component {
         super(props);
         this.state = {
             product: [{id: 1, name: 'asd'}],
-            login: localStorage.getItem('token') == null ? false : true, //status user
+            login: localStorage.getItem('user_id') == null ? false : true, //status user
             countToggle: false
         }
     }

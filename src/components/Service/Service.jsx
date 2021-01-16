@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import './CssService.css';
 import OneButton from './OneButton/OneButton'
 import OneService from './OneService/OneService'
 import NormalFormm from './NormalForm/NormalForm'
 import TakeCareForm from './TakeCareForm/TakeCareForm'
+import Alert from './../../components/Alert/Alert'
 
 
 class Service extends Component {
@@ -14,7 +14,10 @@ class Service extends Component {
         super(props)
         this.state = {
             id: localStorage.getItem('idAccount'),
-            
+            alert:{
+                addClass:'d-none',
+                count: 1
+            }
         }
     }
 
@@ -47,11 +50,48 @@ class Service extends Component {
         console.log(value);
     }
 
-    onCloseForm = (id) => {
+    onCloseForm = (id, status, isAlert) => {
         document.getElementById(`${id}`).classList.add('d-none');
         // ReactDOM.unmountComponentAtNode(document.getElementById(id))
         // document.getElementById(`${id}`).style. = 'hidden';
+        if(isAlert){
+            setTimeout(() => {
+                this.checkSubmitService(status)
+                console.log(status);
+            }, 10);
+        }
+    }
+    
+    checkSubmitService = (status) =>{
+        const {count} = this.state.alert
+        console.log(this.state);
+        let message = 'waiting...'
+        if(status === true){
+            message = 'Đặt lịch thành công'
+        }else{
+            message = 'Đặt lịch thất bại'
+        }
+        setTimeout(() => {
+            let alert = {
+                addClass:'',
+                count: count + 1,
+                content: message === 'waiting...' ? 'waitting....' : message,
+                titleButtonConfirm: 'Ok Nha',
+                titleButtonCancel: 'Ok luôn',
+                titleAlert:'Thông Báo',
+            }
+            console.log(message);
+            this.setState({alert: alert})
+        }, 20);
+    }
 
+    handleCloseAlert = () =>{
+        const {count} = this.state.alert
+        let alert = {
+            addClass:'d-none',
+            count: count + 1,
+        }
+        this.setState({alert: alert})
     }
 
     render() {
@@ -71,7 +111,8 @@ class Service extends Component {
             phương pháp chăm sóc sức khỏe khoa học như việc thăm khám định 
             kỳ sẽ khiến tuổi thọ của thú cưng bị giảm xuống, thậm chí có vật nuôi chỉ sống được vài tháng, 
             vài năm chỉ vì bạn không sớm phát hiện bệnh của chúng.</p>
-        
+        const { titleAlert, titleButtonCancel, titleButtonConfirm, content, addClass, count, isConfirm} = this.state.alert;
+        const {history} = this.props
     return(
         <div id='service' className="col-12 justify-content-center pl-0">
             <div className="container-fluid col-11 col-md-9" style={{zIndex:'10', color:'white', position:'relative'}}>
@@ -102,17 +143,30 @@ class Service extends Component {
                     </div>
                 </div>
             </div>
-            <NormalFormm id='1' title='Đặt Lịch Tắm' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/> 
-            <NormalFormm id='2' title='Đặt Lịch Tỉa Lông' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
-            <NormalFormm id='3' title='Vệ Sinh Tuyến Mồ Hôi' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
-            <NormalFormm id='4' title='Đặt Lịch Xả Lông' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
-            <NormalFormm id='5' title='Khám Tổng Quát' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
-            <NormalFormm id='6' title='Tiểu Phẩu' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
-            <TakeCareForm id='7' title='Trông Coi Trong Ngày' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
-            <TakeCareForm id='8' title='Trông Coi Nhiều Ngày' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
-            <NormalFormm id='9' title='Tiểu Phẩu' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
-            <NormalFormm id='10' title='Tiểu Phẩu' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history}/>
-        </div>);
+            <NormalFormm id='1' title='Đặt Lịch Tắm' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history} /> 
+            <NormalFormm id='2' title='Đặt Lịch Tỉa Lông' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history} />
+            <NormalFormm id='3' title='Vệ Sinh Tuyến Mồ Hôi' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history} />
+            <NormalFormm id='4' title='Đặt Lịch Xả Lông' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history} />
+            <NormalFormm id='5' title='Khám Tổng Quát' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history} />
+            <NormalFormm id='6' title='Tiểu Phẩu' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history} />
+            <TakeCareForm id='7' title='Trông Coi Trong Ngày' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history} />
+            <TakeCareForm id='8' title='Trông Coi Nhiều Ngày' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history} />
+            <NormalFormm id='9' title='Tiểu Phẩu' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history} />
+            <NormalFormm id='10' title='Tiểu Phẩu' onCloseForm={this.onCloseForm} onSubmit={this.onSubmitForm} history={this.props.history} />
+            <Alert
+                key={count}
+                titleAlert={titleAlert}
+                titleButtonCancel={titleButtonCancel}
+                titleButtonConfirm={titleButtonConfirm}
+                content={content}
+                addClass={addClass}
+                history={history}
+                handleConfirmAlert={this.handleCloseAlert}
+                isConfirm={isConfirm}
+                handleCancelAlert={this.handleCloseAlert}
+            />
+        </div>
+        );
     }
 }
 
