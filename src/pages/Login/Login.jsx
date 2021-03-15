@@ -42,7 +42,7 @@ class Login extends Component {
     }
 
     async callAPI (input) {  
-        await axios.post('http://127.0.0.1:8000/api/v1/auth/login', input).then(resp => {
+        await axios.post('http:dichvuthucung.herokuapp.com/api/v1/auth/login', input).then(resp => {
             let user_id = resp.data.data.id
             if(user_id.length !== 0) {
                 localStorage.setItem('user_id', user_id)
