@@ -82,7 +82,7 @@ class Register extends Component {
     }
 
     async callAPI (input) {  
-        await axios.post('http:dichvuthucung.herokuapp.com/api/v1/auth/register', input).then(resp => {
+        await axios.post('https://dichvuthucung.herokuapp.com/api/v1/auth/register', input).then(resp => {
             let token = resp.data.data.access_token
             if(token.length !== 0) {
                 localStorage.setItem('token', token)
