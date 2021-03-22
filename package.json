@@ -17,12 +17,7 @@
     "time-picker-scroll": "^0.1.2",
     "web-vitals": "^0.2.4"
   },
-  "scripts": {
-    "start": "set PORT=2000 && react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
+ 
   "eslintConfig": {
     "extends": [
       "react-app",
