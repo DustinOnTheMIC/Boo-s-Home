@@ -1,4 +1,10 @@
 {
+  "name": "sssclean"
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": "14.4.0"
+  },
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.6",
@@ -17,7 +23,12 @@
     "time-picker-scroll": "^0.1.2",
     "web-vitals": "^0.2.4"
   },
- 
+  "scripts": {
+    "start": "set PORT=2000 && react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
